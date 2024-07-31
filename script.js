@@ -1,20 +1,30 @@
 
-function createSquare() {
+const createSquare = () => {
 	const square = document.createElement('div');
 	square.classList.add('square-wrapper');
 	return square;
 };
 
-function generateSquares(getByElementTag, sizeOfSquares) {
-	const container = document.getElementById(getByElementTag);
+const generateSquares = (byElement, len) => {
+	const container = document.getElementById(byElement);
 	if (container) {
-		for (let i=0; i < sizeOfSquares * sizeOfSquares; i++) {
-			const square = createSquare();
-			container.appendChild(square);
+		container.textContent = "";
+		for (let i=0; i < len*len; i++) {
+			const newSquare = createSquare();
+			container.appendChild(newSquare);
 		}
 	} else {
-		console.error(`requested container "${getByElementTag}" not found!`);
+		console.error(`Not found "${byElement}"🙄`);
 	}
 };
 
-generateSquares('container', 16);
+document.getElementById('generate-new-grid').addEventListener('click', () => {
+	const grid = Number(prompt("Enter number of grids? "));
+	if (!isNaN(grid) && grid > 0) {
+		generateSquares('container', grid);
+	} else {
+		alert('Enter valid number great than 0');
+	}
+});
+
+generateSquares('container', 10);
